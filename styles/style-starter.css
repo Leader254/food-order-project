@@ -1,0 +1,27 @@
+.contact form{
+   margin:0 auto;
+   max-width: 50rem;
+   padding:2rem;
+   text-align: center;
+   border:var(--border);
+   background-color: var(--white);
+   box-shadow: var(--box-shadow);
+   border-radius: .5rem;
+   padding-top: 1rem;
+}
+
+.contact form .box{
+   width: 100%;
+   padding:1.2rem 1.4rem;
+   border:var(--border);
+   margin:1rem 0;
+   background-color: var(--light-bg);
+   font-size: 1.8rem;
+   color:var(--black);
+   border-radius: .5rem;
+}
+
+.contact form textarea{
+   height: 15rem;
+   resize: none;
+}

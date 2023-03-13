@@ -1,10 +1,17 @@
+<?php
+// if session is not set start session
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
 include("connection/connect.php");
 include_once 'product-action.php';
 error_reporting(0);
-session_start();
+// session_start();
 
 function function_alert()
 {
@@ -16,12 +23,15 @@ function function_alert()
 if (empty($_SESSION["user_id"])) {
     header('location:login.php');
 } else {
+    echo '<pre>';
+    var_dump($_SESSION);
+    echo '</pre>';
 
     foreach ($_SESSION["cart_item"] as $item) {
 
         $item_total += ($item["price"] * $item["quantity"]);
 
-        if ($_POST['submit']) {
+        if (isset($_POST['submit'])) {
 
             $SQL = "insert into users_orders(u_id,title,quantity,price) values('" . $_SESSION["user_id"] . "','" . $item["title"] . "','" . $item["quantity"] . "','" . $item["price"] . "')";
 

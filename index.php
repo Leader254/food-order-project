@@ -6,9 +6,9 @@ if (!isset($_SESSION)) {
 include("connection/connect.php");
 error_reporting(0);
 
-echo '<pre>';
+/* echo '<pre>';
 var_dump($_SESSION);
-echo '</pre>';
+echo '</pre>'; */
 
 ?>
 <!DOCTYPE html>

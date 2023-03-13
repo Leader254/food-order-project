@@ -36,6 +36,8 @@ if (empty($_SESSION["user_id"])) {
             $SQL = "insert into users_orders(u_id,title,quantity,price) values('" . $_SESSION["user_id"] . "','" . $item["title"] . "','" . $item["quantity"] . "','" . $item["price"] . "')";
 
             mysqli_query($db, $SQL);
+            // get this order id
+            $order_id = mysqli_insert_id($db);
 
             unset($_SESSION["cart_item"]);
             unset($item["title"]);
@@ -187,7 +189,7 @@ if (empty($_SESSION["user_id"])) {
                                                     </li>
                                                     <li>
                                                         <label class="custom-control custom-radio  m-b-10">
-                                                            <input name="mod" type="radio" value="mpesa" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description"><a href="#">Lipa na Mpesa </a><img src="images/" alt="" width="90"></span> </label>
+                                                            <input name="mod" type="radio" value="mpesa" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description"><a href="./payment blade.php?total=<?php echo $item_total; ?>">Lipa na Mpesa </a><img src="images/" alt="" width="90"></span> </label>
                                                     </li>
                                                 </ul>
                                                 <p class="text-xs-center"> <input type="submit" onclick="return confirm('Do you want to confirm the order?');" name="submit" class="btn btn-success btn-block" value="Order Now"> </p>

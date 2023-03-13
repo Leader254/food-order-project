@@ -95,9 +95,10 @@
                 opacity: 0
             }
         }
-        .custom{
+
+        .custom {
             border-radius: 40px;
-            box-shadow: 1px 1px 1px  black;
+            box-shadow: 1px 1px 1px black;
             outline: none;
         }
 
@@ -108,8 +109,9 @@
             text-align: center;
             color: #4badf7;
         }
-        .custom2{
-            border:none;
+
+        .custom2 {
+            border: none;
             width: 220px;
             outline: none;
         }
@@ -117,24 +119,24 @@
 </head>
 <?php
 
-if(isset($_GET['submit'])){
+if (isset($_GET['submit'])) {
 
     $amount = '10'; //Amount to transact 
     $phonenumber = $_GET['phone-number']; // Phone number paying
-    
+
     $Account_no = '0200176858514'; // Enter account number optional
     $url = 'https://tinypesa.com/api/v1/express/initialize';
     $data = array(
         'amount' => $amount,
         'msisdn' => $phonenumber,
-        'account_no'=>$Account_no
+        'account_no' => $Account_no
     );
     // $headers = array(
     //     'Content-Type: application/x-www-form-urlencoded',
     //     'ApiKey: CrvsYzaoKt5' // Replace with your api key
     //  );
     // $info = http_build_query($data);
-    
+
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_POST, true);
@@ -143,52 +145,50 @@ if(isset($_GET['submit'])){
     curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     $resp = curl_exec($curl);
     $msg_resp = json_decode($resp);
-    
-    
-    if ($msg_resp ->success == 'true') {
+
+    if ($msg_resp->success == 'true') {
         echo "WAIT FOR  STK POP UP";
-      } else {
+    } else {
         echo "Transaction Failed";
-       
-      }
+    }
 }
 
-
-
 ?>
+
 <body oncontextmenu='return false' class='snippet-body'>
- <!-- Header -->
- <header class="">
-      <nav class="navbar navbar-expand-lg">
-        <div class="container">
-          <a class="navbar-brand" href="{{url('/')}}"><h2><em>Food Order & Take-Out</em></h2></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{{url('/')}}">Home
-                  <span class="sr-only">(current)</span>
+    <!-- Header -->
+    <header class="">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="{{url('/')}}">
+                    <h2><em>Food Order & Take-Out</em></h2>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{url('about')}}">About Us</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{url('services')}}">Our Services</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{url('contact')}}">Contact Us</a>
-              
-                
-          </div>
-          
-        </div>
-      </nav>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{url('/')}}">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('about')}}">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('services')}}">Our Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url('contact')}}">Contact Us</a>
+
+                </div>
+
+            </div>
+        </nav>
     </header>
     <div class="container mt-5 d-flex justify-content-center">
-       
+
         <div class="card p-3">
             <div class="d-flex flex-row align-items-center justify-content-between text-white">
                 <div class="d-flex flex-row align-items-center"> <i class="fa fa-angle-left"></i> <span class="ml-2">Pay Here</span> </div>
@@ -198,15 +198,22 @@ if(isset($_GET['submit'])){
                 <div class="circle"><i class="fa fa-wifi"></i></div>
             </div>
             <div class="mt-5 align-items-center d-flex justify-content-center"> <small class="text-white">Transaction...</small> </div>
-            <div class="px-5"> <span class="button mt-3 d-block bg-white p-2">KSH 100.00</span> </div>
+            <div class="px-5"> <span class="button mt-3 d-block bg-white p-2"><?php
+                                                                                echo $_GET['total'];
+                                                                                ?></span> </div>
             <br>
-            <form action="{{url('payment')}}" method="GET">
-            <div class="px-5"> <input  class=" d-block custom2 form-control mt-3 bg-white " type="text"  name="phone-number" placeholder="Phone number"></div>
-           
-            <div class="mt-5 align-items-center d-flex justify-content-center"><button class="btn btn-success  custom bg-lg" type="submit" name="submit">Lipa na Mpesa</button> </div>
+            <form action="reg_exe.php" method="post">
+                <div class="px-5">
+                    <input class=" d-block custom2 form-control mt-3 bg-white " type="text" name="phone-number" placeholder="Phone number">
+                    <input type="hidden" name="order_id">
+                </div>
+
+                <div class="mt-5 align-items-center d-flex justify-content-center">
+                    <button class="btn btn-success  custom bg-lg" type="submit" name="submit">Order and pay now</button>
+                </div>
+            </form>
 
         </div>
-        </form>
     </div>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
     <script type='text/javascript' src=''></script>

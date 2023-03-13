@@ -1,3 +1,10 @@
+<?php
+// if session is not set start session
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,31 +71,7 @@
     </header>
     <div style=" background-image: url('images/img/pimg.jpg');">
 
-        <?php
-        include("connection/connect.php");
-        error_reporting(0);
-        session_start();
-        if (isset($_POST['submit'])) {
-            $username = $_POST['username'];
-            $password = $_POST['password'];
 
-            if (!empty($_POST["submit"])) {
-                $loginquery = "SELECT * FROM users WHERE username='$username' && password='" . md5($password) . "'"; //selecting matching records
-                $result = mysqli_query($db, $loginquery); //executing
-                $row = mysqli_fetch_array($result);
-                $tot = mysqli_num_rows($result);
-
-                if ($tot > 0) {
-                    $_SESSION["user_id"] = $row['u_id'];
-                    // header("refresh:1;url=index.php");
-                    // redirect to index.php using javascript
-                    echo '<script type="text/javascript">window.location.href = "index.php";</script>';
-                } else {
-                    $message = "Invalid Username or Password!";
-                }
-            }
-        }
-        ?>
 
         <div class="pen-title">
         </div>
@@ -109,7 +92,7 @@
                 <h2>Login to your account</h2>
                 <span style="color:red;"><?php echo $message; ?></span>
                 <span style="color:green;"><?php echo $success; ?></span>
-                <form action="" method="post">
+                <form action="reg_exe.php" method="post">
                     <input type="text" placeholder="Username" name="username" />
                     <input type="password" placeholder="Password" name="password" />
                     <input type="submit" id="buttn" name="submit" value="Login" style="border-radius: 20px; cursor:pointer;" />

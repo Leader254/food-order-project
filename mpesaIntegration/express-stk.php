@@ -17,8 +17,6 @@ $config = array(
     "TransactionDesc"  => "Payment of X",
 );
 
-
-
 if (isset($_GET['phone'])) {
 
     $phone = $_GET['phone'];
@@ -28,8 +26,6 @@ if (isset($_GET['phone'])) {
     $phone = (substr($phone, 0, 1) == "+") ? str_replace("+", "", $phone) : $phone;
     $phone = (substr($phone, 0, 1) == "0") ? preg_replace("/^0/", "254", $phone) : $phone;
     $phone = (substr($phone, 0, 1) == "7") ? "254{$phone}" : $phone;
-
-
 
     $access_token = ($config['env']  == "live") ? "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials" : "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
     $credentials = base64_encode($config['key'] . ':' . $config['secret']);
@@ -75,6 +71,7 @@ if (isset($_GET['phone'])) {
     curl_close($ch);
 
     $result = json_decode(json_encode(json_decode($response)), true);
+    print_r($result);
 
     if (!preg_match('/^[0-9]{10}+$/', $phone) && array_key_exists('errorMessage', $result)) {
         $errors['phone'] = $result["errorMessage"];
@@ -88,21 +85,24 @@ if (isset($_GET['phone'])) {
         //Saves your request to a database
         // include("connection/connect.php");
         $db = mysqli_connect("localhost", "shakingmachine_iorder", "icb*lGIIq;Q5", "shakingmachine_onlinefoodphp");
+        if ($db) {
+            echo "db connected!";
+        } else {
+            echo "db not connected!";
+        }
 
-        $sql = "INSERT INTO `orders`(`order_no`, `amount`, `phone`, `CheckoutRequestID`, `MerchantRequestID`) VALUES (" . $orderNo . "','" . $amount . "','" . $phone . "','" . $CheckoutRequestID . "','" . $MerchantRequestID . "');";
-
-        if ($db->query($sql) === TRUE) {
+        $sql = "INSERT INTO `orders`(`order_no`, `amount`, `phone`, `CheckoutRequestID`, `MerchantRequestID`) VALUES ('$orderNo', '$amount', '$phone', '$CheckoutRequestID', '$MerchantRequestID')";
+        $sql_result = mysqli_query($db, $sql);
+        if ($sql_result) {
+            echo "sql entered!";
             $_SESSION["MerchantRequestID"] = $MerchantRequestID;
             $_SESSION["CheckoutRequestID"] = $CheckoutRequestID;
             $_SESSION["phone"] = $phone;
             $_SESSION["order_no"] = $orderNo;
-
-            header('location: confirm-payment.php');
+            // header('location: confirm-payment.php');
+            echo '<script type="text/javascript">window.location.href = "confirm-payment.php";</script>';
         } else {
-            $errors['database'] = "Unable to initiate your order: " . $db->error;;
-            foreach ($errors as $error) {
-                $errmsg .= $error . '<br />';
-            }
+            echo "Error: " . mysqli_error($db);
         }
     } else {
         $errors['mpesastk'] = $result['errorMessage'];

@@ -40,4 +40,30 @@ foreach ($rows as $row) {
     } else {
         file_put_contents('error_log', "Failed to insert Records", FILE_APPEND);
     }
+    // insert the data into payment table
+    /* 
+    uid` int(11) NOT NULL,
+    `order_id` int(11) NOT NULL,
+    `total` int(11) NOT NULL,
+    `MerchantRequestID` varchar(50) NOT NULL,
+    `CheckoutRequestID` varchar(100) NOT NULL,
+    `ResponseCode` int(2) NOT NULL,
+    `ResponseDescription` varchar(255) NOT NULL,
+    `CustomerMessage` varchar(255) NOT NULL */
+    $uid = $_SESSION['uid'];
+    $order_id = $_SESSION['order_no'];
+    $total = $_SESSION['amount'];
+    $MerchantRequestID = $res['Body']['stkCallback']['MerchantRequestID'];
+    $CheckoutRequestID = $res['Body']['stkCallback']['CheckoutRequestID'];
+    $ResponseCode = $res['Body']['stkCallback']['ResultCode'];
+    $ResponseDescription = $res['Body']['stkCallback']['ResultDesc'];
+    $CustomerMessage = $res['Body']['stkCallback']['ResultDesc'];
+
+    $sql = $conn->query("INSERT INTO `payments` (`uid`, `order_id`, `total`, `MerchantRequestID`, `CheckoutRequestID`, `ResponseCode`, `ResponseDescription`, `CustomerMessage`) VALUES ('$uid', '$order_id', '$total', '$MerchantRequestID', '$CheckoutRequestID', '$ResponseCode', '$ResponseDescription', '$CustomerMessage')");
+    $rs = $sql->execute();
+    if ($rs) {
+        file_put_contents('error_log', "Records Inserted", FILE_APPEND);;
+    } else {
+        file_put_contents('error_log', "Failed to insert Records", FILE_APPEND);
+    }
 }

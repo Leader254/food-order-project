@@ -12,7 +12,7 @@ $config = array(
     "username"         => "apitest",
     "TransactionType"  => "CustomerPayBillOnline",
     "passkey"          => "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919", //Enter your passkey here
-    "CallBackURL"      => "https://iorder.shaking-machine.com/mpesaIntegration/callback.php", //When using localhost, Use Ngrok to forward the response to your Localhost
+    "CallBackURL"      => "https://iorder.shaking-machine.com/iorder/mpesaIntegration/callback.php", //When using localhost, Use Ngrok to forward the response to your Localhost
     "AccountReference" => "CompanyXLTD",
     "TransactionDesc"  => "Payment of X",
 );
@@ -86,16 +86,16 @@ if (isset($_GET['phone'])) {
         $CheckoutRequestID = $result['CheckoutRequestID'];
 
         //Saves your request to a database
-        include("connection/connect.php");
-        // $db = mysqli_connect("localhost", "root", "", "mpesa");
+        // include("connection/connect.php");
+        $db = mysqli_connect("localhost", "shakingmachine_iorder", "icb*lGIIq;Q5", "shakingmachine_onlinefoodphp");
 
-        $sql = "INSERT INTO `orders`(`ID`, `OrderNo`, `Amount`, `Phone`, `CheckoutRequestID`, `MerchantRequestID`) VALUES ('','" . $orderNo . "','" . $amount . "','" . $phone . "','" . $CheckoutRequestID . "','" . $MerchantRequestID . "');";
+        $sql = "INSERT INTO `orders`(`order_no`, `amount`, `phone`, `CheckoutRequestID`, `MerchantRequestID`) VALUES (" . $orderNo . "','" . $amount . "','" . $phone . "','" . $CheckoutRequestID . "','" . $MerchantRequestID . "');";
 
         if ($db->query($sql) === TRUE) {
             $_SESSION["MerchantRequestID"] = $MerchantRequestID;
             $_SESSION["CheckoutRequestID"] = $CheckoutRequestID;
             $_SESSION["phone"] = $phone;
-            $_SESSION["orderNo"] = $orderNo;
+            $_SESSION["order_no"] = $orderNo;
 
             header('location: confirm-payment.php');
         } else {
@@ -108,6 +108,7 @@ if (isset($_GET['phone'])) {
         $errors['mpesastk'] = $result['errorMessage'];
         foreach ($errors as $error) {
             $errmsg .= $error . '<br />';
+            echo $error;
         }
     }
 }

@@ -2,6 +2,7 @@
 // if session is not set start session
 if (!isset($_SESSION)) {
     session_start();
+    var_dump($_SESSION);
 }
 ?>
 

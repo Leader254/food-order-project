@@ -209,7 +209,7 @@ if (isset($_GET['submit'])) {
                 </div>
 
                 <div class="mt-5 align-items-center d-flex justify-content-center">
-                    <button class="btn btn-success  custom bg-lg" type="submit" name="submit">Order and pay now</button>
+                    <button class="btn btn-success  custom bg-lg" type="submit" name="pay-order">Order and pay now</button>
                 </div>
             </form>
 

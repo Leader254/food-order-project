@@ -225,7 +225,13 @@ include_once 'product-action.php';
 
                                             <div class="col-xs-12 col-sm-12 col-lg-3 pull-right item-cart-info">
                                                 <span class="price pull-left">Ksh <?php echo $product['price']; ?></span>
-                                                <input class="b-r-0" type="text" name="quantity" style="margin-left:30px;" value="1" size="2" />
+                                                <input class="b-r-0" type="text" name="quantity" style="margin-left:30px; " value="1" size="11" />
+                                                <!-- <input class="b-r-0" type="text" name="quantity" style="margin-left:30px;" placeholder="1 @ Ksh
+                                                 <?
+                                                //   for up there
+                                                //  php echo $product['price']; 
+                                                 ?>
+                                                 " value="1" size="11" /> -->
                                                 <input type="submit" class="btn theme-btn" style="margin-left:40px;" value="Add To Cart" />
                                             </div>
                                             </form>

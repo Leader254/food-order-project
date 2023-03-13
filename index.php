@@ -113,6 +113,68 @@ session_start();
 
 
 
+    <!-- <script async src='https://d2mpatx37cqexb.cloudfront.net/delightchat-whatsapp-widget/embeds/embed.min.js'></script>
+    <script>
+        var wa_btnSetting = {
+            "btnColor": "#16BE45",
+            "ctaText": "WhatsApp Us",
+            "cornerRadius": 40,
+            "marginBottom": 20,
+            "marginLeft": 20,
+            "marginRight": 20,
+            "btnPosition": "right",
+            "whatsAppNumber": "254705736628",
+            "welcomeMessage": "Hi there,\nWelcome today and feel free to talk to us for orders.",
+            "zIndex": 999999,
+            "btnColorScheme": "light"
+        };
+        window.onload = () => {
+            _waEmbed(wa_btnSetting);
+        };
+    </script> -->
+    <!-- <script async src='https://d2mpatx37cqexb.cloudfront.net/delightchat-whatsapp-widget/embeds/embed.min.js'></script>
+    <script>
+        var wa_btnSetting = {
+            "btnColor": "#16BE45",
+            "ctaText": "WhatsApp Us",
+            "cornerRadius": 40,
+            "marginBottom": 20,
+            "marginLeft": 20,
+            "marginRight": 20,
+            "btnPosition": "right",
+            "whatsAppNumber": "254741225213",
+            "welcomeMessage": "",
+            "zIndex": 999999,
+            "btnColorScheme": "light"
+        };
+        var wa_widgetSetting = {
+            "title": "iOrder",
+            "subTitle": "Typically replies within a minute",
+            "headerBackgroundColor": "#11ff00",
+            "headerColorScheme": "light",
+            "greetingText": "Hi and welcome! \nFeel like having a mouth washing meal, order here",
+            "ctaText": "Start Chat",
+            "btnColor": "#1A1A1A",
+            "cornerRadius": 40,
+            "welcomeMessage": "Hello",
+            "btnColorScheme": "light",
+            "brandImage": "https://uploads-ssl.webflow.com/5f68a65cd5188c058e27c898/6204c4267b92625c9770f687_whatsapp-chat-widget-dummy-logo.png",
+            "darkHeaderColorScheme": {
+                "title": "#333333",
+                "subTitle": "#4F4F4F"
+            }
+        };
+        window.onload = () => {
+            _waEmbed(wa_btnSetting, wa_widgetSetting);
+        };
+    </script> -->
+    <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
+    <div class="commonninja_component pid-1b1540e4-138d-43bd-9373-8128edbc4be8"></div>
+    <!--WIDGET ID -- 1b1540e4-138d-43bd-9373-8128edbc4be8 -->
+
+
+
+
 
 
     <section class="popular">
@@ -303,7 +365,8 @@ session_start();
         </div>
     </footer>
 
-    
+    <!-- <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+    <div class="elfsight-app-92f3439c-7bde-4085-b015-d93a2c376755"></div> -->
 
     <script src="leaflet/leaflet.js"></script>
     <script src="js/main.js"></script>

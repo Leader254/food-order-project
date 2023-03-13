@@ -2,7 +2,7 @@ name: 🚀 Publish website to cpanel
 on:
   push:
     branches:
-      - master
+      - main
 jobs:
   FTP-Deploy-Action:
     name: FTP-Deploy-Action

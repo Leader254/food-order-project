@@ -26,7 +26,7 @@ if (isset($_SESSION["phone"])) {
     $message .= "Order Status: Confirmed\n";
     $message .= "Order Date: " . date("Y-m-d") . "\n";
     $message .= "Order Time: " . date("h:i:sa") . "\n";
-    $headers = "From: iOrder < ";
+    $headers = "From: iOrder axzyte385@gmail.com";
     if (mail($to, $subject, $message, $headers)) {
         echo "Payment Confirmed and Mail Sent";
     } else {

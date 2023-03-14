@@ -1,15 +1,21 @@
+<?php
+// if session is not set start session
+if (!isset($_SESSION)) {
+    session_start();
+    // var_dump($_SESSION);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
 include("connection/connect.php");
 include_once 'product-action.php';
 error_reporting(0);
-session_start();
-
+// session_start();
 
 function function_alert()
 {
-
 
     echo "<script>alert('Thank you. Your Order has been placed!');</script>";
     echo "<script>window.location.replace('your_orders.php');</script>";
@@ -18,18 +24,21 @@ function function_alert()
 if (empty($_SESSION["user_id"])) {
     header('location:login.php');
 } else {
-
+    /* echo '<pre>';
+    var_dump($_SESSION);
+    echo '</pre>'; */
 
     foreach ($_SESSION["cart_item"] as $item) {
 
         $item_total += ($item["price"] * $item["quantity"]);
 
-        if ($_POST['submit']) {
+        if (isset($_POST['submit'])) {
 
             $SQL = "insert into users_orders(u_id,title,quantity,price) values('" . $_SESSION["user_id"] . "','" . $item["title"] . "','" . $item["quantity"] . "','" . $item["price"] . "')";
 
             mysqli_query($db, $SQL);
-
+            // get this order id
+            $order_id = mysqli_insert_id($db);
 
             unset($_SESSION["cart_item"]);
             unset($item["title"]);
@@ -38,10 +47,30 @@ if (empty($_SESSION["user_id"])) {
             $success = "Thank you. Your order has been placed!";
 
             function_alert();
+            // get user details
+            $user_id = $_SESSION["user_id"];
+            $sql = "SELECT * FROM users WHERE u_id='$user_id'";
+            $result = mysqli_query($db, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $user_email = $row['email'];
+            $user_name = $row['username'];
+
+            // send mail
+            $to = $user_email;
+            $subject = "Order Confirmation";
+            $message = "Hello " . $user_name . ",\n\nThank you for your order. Your order has been placed and will be delivered shortly.\n\nRegards,\niOrder";
+            $headers = "From: iOrder ";
+            mail($to, $subject, $message, $headers);
+            // mail to admin
+            $to = "samuelwachira219@gmail.com";
+            $subject = "New Order";
+            $message = "Hello Admin,\n\nA new order has been placed. Please check your dashboard for more details.\n\nRegards,\niOrder";
+            $headers = "From: iOrder ";
+            mail($to, $subject, $message, $headers);
         }
     }
+    // echo $_SESSION["user_id"];
 ?>
-
 
     <head>
         <meta charset="utf-8">
@@ -81,7 +110,6 @@ if (empty($_SESSION["user_id"])) {
 							  <li class="nav-item"><a href="registration.php" class="nav-link active">Register</a> </li>';
                                 } else {
 
-
                                     echo  '<li class="nav-item"><a href="your_orders.php" class="nav-link active">My Orders</a> </li>';
                                     echo  '<li class="nav-item"><a href="contact.php" class="nav-link active">Contact Us</a> </li>';
                                     echo  '<li class="nav-item"><a href="logout.php" class="nav-link active">Logout</a> </li>';
@@ -114,9 +142,6 @@ if (empty($_SESSION["user_id"])) {
 
                 </div>
 
-
-
-
                 <div class="container m-t-30">
                     <form action="" method="post">
                         <div class="widget clearfix">
@@ -135,8 +160,6 @@ if (empty($_SESSION["user_id"])) {
                                                     <table class="table">
                                                         <tbody>
 
-
-
                                                             <tr>
                                                                 <td>Cart Subtotal</td>
                                                                 <td> <?php echo "Ksh" . $item_total; ?></td>
@@ -150,9 +173,6 @@ if (empty($_SESSION["user_id"])) {
                                                                 <td class="text-color"><strong> <?php echo "Ksh" . $item_total; ?></strong></td>
                                                             </tr>
                                                         </tbody>
-
-
-
 
                                                     </table>
                                                 </div>
@@ -170,7 +190,7 @@ if (empty($_SESSION["user_id"])) {
                                                     </li>
                                                     <li>
                                                         <label class="custom-control custom-radio  m-b-10">
-                                                            <input name="mod" type="radio" value="mpesa" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description"><a href="#">Lipa na Mpesa </a><img src="images/" alt="" width="90"></span> </label>
+                                                            <input name="mod" type="radio" value="mpesa" class="custom-control-input"> <span class="custom-control-indicator"></span> <span class="custom-control-description"><a href="./payment blade.php?total=<?php echo $item_total; ?>">Lipa na Mpesa </a><img src="images/" alt="" width="90"></span> </label>
                                                     </li>
                                                 </ul>
                                                 <p class="text-xs-center"> <input type="submit" onclick="return confirm('Do you want to confirm the order?');" name="submit" class="btn btn-success btn-block" value="Order Now"> </p>

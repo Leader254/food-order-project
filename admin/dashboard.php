@@ -49,9 +49,6 @@ if (empty($_SESSION["adm_id"])) {
                         <ul class="navbar-nav mr-auto mt-md-0">
                         </ul>
 
-
-
-
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted  " href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="images/bookingSystem/user-icn.png" alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right animated zoomIn">
@@ -90,7 +87,6 @@ if (empty($_SESSION["adm_id"])) {
                                     <li><a href="all_menu.php">All Menues</a></li>
                                     <li><a href="add_menu.php">Add Menu</a></li>
 
-
                                 </ul>
                             </li>
                             <li> <a href="all_orders.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>Orders</span></a></li>
@@ -103,8 +99,6 @@ if (empty($_SESSION["adm_id"])) {
             </div>
 
             <div class="page-wrapper">
-
-
 
                 <div class="container-fluid">
                     <div class="col-lg-12">
@@ -251,7 +245,7 @@ if (empty($_SESSION["adm_id"])) {
                                                 <span><i class="fa fa-times f-s-40" aria-hidden="true"></i></span>
                                             </div>
                                             <div class="media-body media-text-right">
-                                                <h2><?php $sql = "select * from users_orders WHERE status = 'rejected' ";
+                                                <h2><?php $sql = "select * from orders WHERE status = 'CANCELLED' ";
                                                     $result = mysqli_query($db, $sql);
                                                     $rws = mysqli_num_rows($result);
 
@@ -270,9 +264,12 @@ if (empty($_SESSION["adm_id"])) {
                                             </div>
                                             <div class="media-body media-text-right">
                                                 <h2><?php
-                                                    $result = mysqli_query($db, 'SELECT SUM(price) AS value_sum FROM users_orders WHERE status = "closed"');
-                                                    $row = mysqli_fetch_assoc($result);
-                                                    $sum = $row['value_sum'];
+                                                    $result = mysqli_query($db, 'SELECT * FROM orders WHERE status = "SUCCESS"');
+                                                    $sum = 0;
+                                                    while ($row = mysqli_fetch_assoc($result)) {
+                                                        $sum += $row['amount'];
+                                                    }
+
                                                     echo $sum;
                                                     ?></h2>
                                                 <p class="m-b-0">Total Earnings</p>

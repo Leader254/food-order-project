@@ -1,9 +1,16 @@
+<?php
+// if session is not set start session
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
 include("connection/connect.php");
 error_reporting(0);
-session_start();
+// session_start();
 
 include_once 'product-action.php';
 

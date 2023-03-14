@@ -1,11 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
+// if session is not set start session
+if (!isset($_SESSION)) {
+    session_start();
+}
 include("connection/connect.php");
 error_reporting(0);
-session_start();
+
+/* echo '<pre>';
+var_dump($_SESSION);
+echo '</pre>'; */
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -44,14 +51,12 @@ session_start();
                         <li class="nav-item"> <a class="nav-link active" href="index.php">Home <span class="sr-only">(current)</span></a> </li>
                         <li class="nav-item"> <a class="nav-link active" href="restaurants.php">Restaurants <span class="sr-only"></span></a> </li>
 
-
                         <?php
                         if (empty($_SESSION["user_id"])) // if user is not login
                         {
                             echo '<li class="nav-item"><a href="login.php" class="nav-link active">Login</a> </li>
 							  <li class="nav-item"><a href="registration.php" class="nav-link active">Register</a> </li>';
                         } else {
-
 
                             echo  '<li class="nav-item"><a href="your_orders.php" class="nav-link active">My Orders</a> </li>';
                             echo  '<li class="nav-item"><a href="logout.php" class="nav-link active">Logout</a> </li>';
@@ -111,8 +116,6 @@ session_start();
 
     </section>
 
-
-
     <!-- <script async src='https://d2mpatx37cqexb.cloudfront.net/delightchat-whatsapp-widget/embeds/embed.min.js'></script>
     <script>
         var wa_btnSetting = {
@@ -171,7 +174,6 @@ session_start();
     <script src="https://cdn.commoninja.com/sdk/latest/commonninja.js" defer></script>
     <div class="commonninja_component pid-1b1540e4-138d-43bd-9373-8128edbc4be8"></div>
     <!--WIDGET ID -- 1b1540e4-138d-43bd-9373-8128edbc4be8 -->
-
 
 
 
@@ -291,7 +293,6 @@ session_start();
             <div class="row">
                 <div class="restaurant-listing">
 
-
                     <?php
                     $ress = mysqli_query($db, "select * from restaurant");
                     while ($rows = mysqli_fetch_array($ress)) {
@@ -317,15 +318,10 @@ session_start();
 													</div>';
                     }
 
-
                     ?>
-
-
-
 
                 </div>
             </div>
-
 
         </div>
     </section>
@@ -334,7 +330,6 @@ session_start();
 
     <footer class="footer">
         <div class="container">
-
 
             <div class="bottom-footer">
                 <div class="row">
@@ -364,9 +359,6 @@ session_start();
 
         </div>
     </footer>
-
-    <!-- <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-    <div class="elfsight-app-92f3439c-7bde-4085-b015-d93a2c376755"></div> -->
 
     <script src="leaflet/leaflet.js"></script>
     <script src="js/main.js"></script>

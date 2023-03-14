@@ -49,7 +49,7 @@ if (isset($_SESSION["phone"])) {
         $headers = "From: iOrder ";
         mail($to, $subject, $message, $headers);
         // a button to redirect to home page
-        echo "<a href='index.php' class='btn btn-primary'>Go to Home</a>";
+        echo "<a href'../index.php' class='btn btn-primary'>Go to Home</a>";
     } else {
         echo "Payment Confirmed but Mail Not Sent";
         $last_error = error_get_last();

@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 include("../connection/connect.php");
 error_reporting(0);
 session_start();
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+
 
 <head>
     <meta charset="utf-8">
@@ -18,7 +19,6 @@ session_start();
     <link href="css/lib/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="css/helper.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
 
 </head>
 
@@ -48,14 +48,9 @@ session_start();
 
                     <ul class="navbar-nav mr-auto mt-md-0">
 
-
-
-
                     </ul>
 
                     <ul class="navbar-nav my-lg-0">
-
-
 
                         <li class="nav-item dropdown">
 
@@ -109,7 +104,6 @@ session_start();
                                 <li><a href="all_menu.php">All Menues</a></li>
                                 <li><a href="add_menu.php">Add Menu</a></li>
 
-
                             </ul>
                         </li>
                         <li> <a href="all_orders.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i><span>Orders</span></a></li>
@@ -123,18 +117,22 @@ session_start();
 
         <div class="page-wrapper">
 
-
-
             <div class="container-fluid">
 
                 <div class="row">
                     <div class="col-12">
 
-
                         <div class="col-lg-12">
                             <div class="card card-outline-primary">
                                 <div class="card-header">
                                     <h4 class="m-b-0 text-white">All Orders</h4>
+                                </div>
+                                <div class="card-header">
+                                    <form action="export.php" method="post">
+                                        <!-- button to export orders as either csv or pdf -->
+                                        <button class="btn btn-success" type="submit" name="export_csv">Export as CSV</button>
+                                        <button class="btn btn-danger" type="submit" name="export_pdf">Export as PDF</button>
+                                    </form>
                                 </div>
 
                                 <div class="table-responsive m-t-40">
@@ -153,7 +151,6 @@ session_start();
                                             </tr>
                                         </thead>
                                         <tbody>
-
 
                                             <?php
                                             $sql = "SELECT users.*, users_orders.* FROM users INNER JOIN users_orders ON users.u_id=users_orders.u_id ";
@@ -209,10 +206,7 @@ session_start();
                                                 }
                                             }
 
-
                                                 ?>
-
-
 
                                         </tbody>
                                     </table>
@@ -227,7 +221,6 @@ session_start();
     </div>
 
     </div>
-
 
     <footer class="footer"> ©Sam Codes</footer>
 

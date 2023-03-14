@@ -2,7 +2,7 @@
 // if session is not set start session
 if (!isset($_SESSION)) {
     session_start();
-    var_dump($_SESSION);
+    // var_dump($_SESSION);
 }
 ?>
 
@@ -24,9 +24,9 @@ function function_alert()
 if (empty($_SESSION["user_id"])) {
     header('location:login.php');
 } else {
-    echo '<pre>';
+    /* echo '<pre>';
     var_dump($_SESSION);
-    echo '</pre>';
+    echo '</pre>'; */
 
     foreach ($_SESSION["cart_item"] as $item) {
 

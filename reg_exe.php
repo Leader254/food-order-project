@@ -29,6 +29,7 @@ if (isset($_POST['submit'])) {
 // payment order
 if (isset($_POST['pay-order'])) {
     $phone = mysqli_real_escape_string($db, $_POST['phone-number']);
+    $item_total = 0;
     foreach ($_SESSION["cart_item"] as $item) {
 
         $item_total += ($item["price"] * $item["quantity"]);
@@ -39,11 +40,7 @@ if (isset($_POST['pay-order'])) {
         // get this order id
         $order_id = mysqli_insert_id($db);
     }
-    unset($_SESSION["cart_item"]);
-    unset($item["title"]);
-    unset($item["quantity"]);
-    unset($item["price"]);
-    $success = "Thank you. Your order has been placed!";
+
 
     // function_alert();
     // get user details
@@ -69,13 +66,24 @@ if (isset($_POST['pay-order'])) {
 
     // save to payment table
     $uid = $_SESSION["user_id"];
-    $sql3 = "INSERT INTO payments (u_id, order_id, total) VALUES ('$uid', '$order_id', '$item_total')";
+    echo $uid;
+    echo "order id: " . $order_id;
+    echo "total: " . $item_total;
+    echo "phone: " . $phone;
+    $sql3 = "INSERT INTO payments (uid, order_id, total) VALUES ('$uid', '$order_id', '$item_total')";
     $result = mysqli_query($db, $sql3);
     if ($result) {
         echo "New record created successfully";
         // get request  to express-stk.php to initiate stk push
-        $url = "https://localhost/express-stk.php?phone=" . $phone . "&amount=" . $item_total . "&order_id=" . $order_id;
-        header("Location: $url");
+        // $url = "https://localhost/express-stk.php?phone=" . $phone . "&amount=" . $item_total . "&order_id=" . $order_id;https://iorder.shaking-machine.com/iorder/mpesaIntegration/express-stk.php?phone=0724772046&amount=1&order_id=10
+        $url = "https://iorder.shaking-machine.com/iorder/mpesaIntegration/express-stk.php?phone=" . $phone . "&amount=" . $item_total . "&order_id=" . $order_id;
+        unset($_SESSION["cart_item"]);
+        unset($item["title"]);
+        unset($item["quantity"]);
+        unset($item["price"]);
+        $success = "Thank you. Your order has been placed!";
+        // header("Location: $url");
+        echo '<script type="text/javascript">window.location.href = "' . $url . '";</script>';
     } else {
         echo "Error: " . $sql3 . "<br>" . mysqli_error($db);
     }

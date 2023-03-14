@@ -1,5 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
 <?php
 include("../connection/connect.php");
 error_reporting(0);
@@ -8,6 +6,8 @@ if (empty($_SESSION["adm_id"])) {
     header('location:index.php');
 } else {
 ?>
+    <!DOCTYPE html>
+    <html lang="en">
 
     <head>
         <meta charset="utf-8">
@@ -292,7 +292,7 @@ if (empty($_SESSION["adm_id"])) {
 
     </body>
 
-</html>
+    </html>
 <?php
 }
 ?>
